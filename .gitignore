@@ -1,0 +1,18 @@
+# Ignore Ash notes
+ashNotes.md
+
+# Ignore Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Ignore Go test binary
+*.test
+
+# Ignore Go coverage output
+*.out
+
+# Ignore Go workspace file
+go.work
