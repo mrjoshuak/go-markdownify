@@ -102,12 +102,13 @@ func main() {
 | HeadingStyle         | string   | UNDERLINED | Style for headings (ATX, ATX_CLOSED, or UNDERLINED)                   |
 | KeepInlineImagesIn   | []string | []         | List of tags to keep inline images in                                 |
 | NewlineStyle         | string   | SPACES     | Style for line breaks (SPACES or BACKSLASH)                           |
+| NormalizeNewlines    | bool     | true       | Normalize multiple consecutive newlines to a maximum of 2             |
 | Strip                | []string | nil        | List of tags to strip (if nil, strip none)                            |
-| StripDocument        | string   | STRIP      | How to strip document-level whitespace (LSTRIP, RSTRIP, STRIP, or "") |
+| StripDocument        | string   | LSTRIP     | How to strip document-level whitespace (LSTRIP, RSTRIP, STRIP, or "") |
 | StrongEmSymbol       | string   | ASTERISK   | Symbol for strong and emphasis (ASTERISK or UNDERSCORE)               |
 | SubSymbol            | string   | ""         | Symbol for subscript                                                  |
 | SupSymbol            | string   | ""         | Symbol for superscript                                                |
-| TableInferHeader     | bool     | false      | Infer table headers when not explicitly defined                       |
+| TableInferHeader     | bool     | true       | Infer table headers when not explicitly defined                       |
 | Wrap                 | bool     | false      | Wrap text at specified width                                          |
 | WrapWidth            | int      | 80         | Width to wrap text at                                                 |
 

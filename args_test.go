@@ -52,7 +52,7 @@ func TestStripDocument(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error converting HTML: %v", err)
 	}
-	expected := "Hello"
+	expected := "Hello\n\n"
 	if result != expected {
 		t.Errorf("Expected %q, got %q", expected, result)
 	}
@@ -76,7 +76,7 @@ func TestStripDocument(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error converting HTML: %v", err)
 	}
-	expected = "\n\nHello"
+	expected = "Hello\n\n"
 	if result != expected {
 		t.Errorf("Expected %q, got %q", expected, result)
 	}

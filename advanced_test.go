@@ -117,7 +117,7 @@ func TestSpecialTags(t *testing.T) {
 	}
 }
 
-func TestTextWrapping(t *testing.T) {
+func TestTextWrappingAdvanced(t *testing.T) {
 	// Test text wrapping with a width of 20
 	opts := DefaultOptions()
 	opts.Wrap = true
