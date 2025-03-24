@@ -318,7 +318,11 @@ func (c *Converter) convertLi(n *html.Node, text string, parentTags []string) st
 		}
 
 		bullets := c.options.Bullets
-		bullet = string(bullets[depth%len(bullets)])
+		bulletIndex := depth % len(bullets)
+		if bulletIndex < 0 {
+			bulletIndex = 0 // Ensure the index is never negative
+		}
+		bullet = string(bullets[bulletIndex])
 	}
 
 	bullet = bullet + " "
