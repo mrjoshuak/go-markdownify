@@ -48,5 +48,5 @@ func Convert(html string, options ...Options) (string, error) {
 		opts = options[0]
 	}
 	converter := NewConverter(opts)
-	return converter.Convert(html)
+	return converter.ConvertFixed(html)
 }

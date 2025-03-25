@@ -155,9 +155,13 @@ func (c *Converter) processElement(n *html.Node, parentTags []string) string {
 	newParentTags = append(newParentTags, n.Data)
 
 	// Add special parent pseudo-tags
-	if reHTMLHeading.MatchString(n.Data) || n.Data == "td" || n.Data == "th" {
+	if n.Data == "td" || n.Data == "th" {
 		newParentTags = append(newParentTags, "_inline")
+	} else if reHTMLHeading.MatchString(n.Data) {
+		// Don't add _inline tag for headings to fix TestHeadings and TestImages
+		// This allows the heading conversion to work properly
 	}
+
 	if n.Data == "pre" || n.Data == "code" || n.Data == "kbd" || n.Data == "samp" {
 		newParentTags = append(newParentTags, "_noformat")
 	}
@@ -190,48 +194,48 @@ func (c *Converter) processElement(n *html.Node, parentTags []string) string {
 	text := childrenText.String()
 	switch n.Data {
 	case "a":
-		return c.convertA(n, text, parentTags)
+		return c.convertA(n, text, newParentTags)
 	case "b", "strong":
-		return c.convertB(n, text, parentTags)
+		return c.convertB(n, text, newParentTags)
 	case "blockquote":
-		return c.convertBlockquote(n, text, parentTags)
+		return c.convertBlockquote(n, text, newParentTags)
 	case "br":
-		return c.convertBr(n, text, parentTags)
+		return c.convertBr(n, text, newParentTags)
 	case "code", "kbd", "samp":
-		return c.convertCode(n, text, parentTags)
+		return c.convertCode(n, text, newParentTags)
 	case "del", "s":
-		return c.convertDel(n, text, parentTags)
+		return c.convertDel(n, text, newParentTags)
 	case "div", "article", "section":
-		return c.convertDiv(n, text, parentTags)
+		return c.convertDiv(n, text, newParentTags)
 	case "em", "i":
-		return c.convertEm(n, text, parentTags)
+		return c.convertEm(n, text, newParentTags)
 	case "h1", "h2", "h3", "h4", "h5", "h6":
 		level := int(n.Data[1] - '0')
-		return c.convertH(level, n, text, parentTags)
+		return c.convertH(level, n, text, newParentTags)
 	case "hr":
-		return c.convertHr(n, text, parentTags)
+		return c.convertHr(n, text, newParentTags)
 	case "img":
-		return c.convertImg(n, text, parentTags)
+		return c.convertImg(n, text, newParentTags)
 	case "li":
-		return c.convertLi(n, text, parentTags)
+		return c.convertLi(n, text, newParentTags)
 	case "ol", "ul":
-		return c.convertList(n, text, parentTags)
+		return c.convertList(n, text, newParentTags)
 	case "p":
-		return c.convertP(n, text, parentTags)
+		return c.convertP(n, text, newParentTags)
 	case "pre":
-		return c.convertPre(n, text, parentTags)
+		return c.convertPre(n, text, newParentTags)
 	case "sub":
-		return c.convertSub(n, text, parentTags)
+		return c.convertSub(n, text, newParentTags)
 	case "sup":
-		return c.convertSup(n, text, parentTags)
+		return c.convertSup(n, text, newParentTags)
 	case "table":
-		return c.convertTable(n, text, parentTags)
+		return c.convertTable(n, text, newParentTags)
 	case "td":
-		return c.convertTd(n, text, parentTags)
+		return c.convertTd(n, text, newParentTags)
 	case "th":
-		return c.convertTh(n, text, parentTags)
+		return c.convertTh(n, text, newParentTags)
 	case "tr":
-		return c.convertTr(n, text, parentTags)
+		return c.convertTr(n, text, newParentTags)
 	default:
 		// For unknown tags, just return the text
 		return text
