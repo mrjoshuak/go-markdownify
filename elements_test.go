@@ -85,16 +85,19 @@ func TestLinks(t *testing.T) {
 		t.Errorf("Expected %q, got %q", expected, result)
 	}
 
-	// Test with title
-	result = md("<a href=\"http://google.com\" title=\"The &quot;Goog&quot;\">Google</a>")
+	// Test with title and StripLinkTitles = false
+	opts := DefaultOptions()
+	opts.StripLinkTitles = false
+	result = md("<a href=\"http://google.com\" title=\"The &quot;Goog&quot;\">Google</a>", opts)
 	expected = "[Google](http://google.com \"The \\\"Goog\\\"\")"
 	if result != expected {
 		t.Errorf("Expected %q, got %q", expected, result)
 	}
 
-	// Test with DefaultTitle option
-	opts := DefaultOptions()
+	// Test with DefaultTitle option and StripLinkTitles = false
+	opts = DefaultOptions()
 	opts.DefaultTitle = true
+	opts.StripLinkTitles = false
 	result = md("<a href=\"https://google.com\">Google</a>", opts)
 	expected = "[Google](https://google.com \"https://google.com\")"
 	if result != expected {

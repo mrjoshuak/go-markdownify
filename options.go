@@ -35,6 +35,11 @@ type Options struct {
 	// DefaultTitle determines whether to use the href as the title for links
 	// when no title attribute is provided.
 	DefaultTitle bool
+	
+	// StripLinkTitles determines whether to strip all title attributes from links,
+	// regardless of whether they were provided in the HTML.
+	// This ensures consistent output with the Python markdownify package.
+	StripLinkTitles bool
 
 	// EscapeAsterisks determines whether to escape * characters in the text.
 	// This prevents them from being interpreted as Markdown formatting.
@@ -89,6 +94,11 @@ type Options struct {
 	// TableInferHeader determines whether to infer table headers when not explicitly defined.
 	// When true, the first row of a table is treated as a header row if no <th> tags are present.
 	TableInferHeader bool
+	
+	// DeduplicateHeadings determines whether to remove duplicate headings.
+	// When true, subsequent identical headings will be removed from the output.
+	// This helps match the behavior of the Python markdownify package.
+	DeduplicateHeadings bool
 
 	// Wrap determines whether to wrap text at a specified width.
 	// When true, long lines are wrapped to improve readability.
@@ -103,25 +113,27 @@ type Options struct {
 // These defaults are designed to match the behavior of the Python markdownify package.
 func DefaultOptions() Options {
 	return Options{
-		Autolinks:          true,
-		Bullets:            "*+-",
-		CodeLanguage:       "",
-		Convert:            nil,
-		DefaultTitle:       false,
-		EscapeAsterisks:    true,
-		EscapeUnderscores:  true,
-		EscapeMisc:         false,
-		HeadingStyle:       UNDERLINED,
-		KeepInlineImagesIn: []string{},
-		NewlineStyle:       SPACES,
-		NormalizeNewlines:  true,
-		Strip:              nil,
-		StripDocument:      LSTRIP,
-		StrongEmSymbol:     ASTERISK,
-		SubSymbol:          "",
-		SupSymbol:          "",
-		TableInferHeader:   true, // Match Python markdownify behavior
-		Wrap:               false,
-		WrapWidth:          80,
+		Autolinks:           true,
+		Bullets:             "*+-",
+		CodeLanguage:        "",
+		Convert:             nil,
+		DefaultTitle:        false,
+		StripLinkTitles:     true,  // Strip titles to match Python markdownify behavior
+		EscapeAsterisks:     true,
+		EscapeUnderscores:   true,
+		EscapeMisc:          false,
+		HeadingStyle:        UNDERLINED,
+		KeepInlineImagesIn:  []string{},
+		NewlineStyle:        SPACES,
+		NormalizeNewlines:   true,
+		Strip:               nil,
+		StripDocument:       LSTRIP,
+		StrongEmSymbol:      ASTERISK,
+		SubSymbol:           "",
+		SupSymbol:           "",
+		TableInferHeader:    true, // Match Python markdownify behavior
+		DeduplicateHeadings: true, // Match Python markdownify behavior
+		Wrap:                false,
+		WrapWidth:           80,
 	}
 }

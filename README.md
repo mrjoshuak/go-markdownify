@@ -24,7 +24,9 @@ possible in both functionality and API.
   - Inline formatting (bold, italic, code, etc.)
 - Configurable options:
   - Heading style (ATX, ATX_CLOSED, or UNDERLINED)
+  - Heading deduplication to avoid duplicate headings
   - Strong/emphasis symbol (asterisk or underscore)
+  - Link title handling (include or strip title attributes)
   - Newline style (spaces or backslash)
   - Code language
   - And more...
@@ -96,6 +98,7 @@ func main() {
 | CodeLanguageCallback | func     | nil        | Function to determine code language from node                         |
 | Convert              | []string | nil        | List of tags to convert (if nil, convert all)                         |
 | DefaultTitle         | bool     | false      | Use href as title for links when no title is provided                 |
+| DeduplicateHeadings  | bool     | true       | Remove duplicate headings                                             |
 | EscapeAsterisks      | bool     | true       | Escape * in text                                                      |
 | EscapeUnderscores    | bool     | true       | Escape _ in text                                                      |
 | EscapeMisc           | bool     | false      | Escape other special characters                                       |
@@ -105,6 +108,7 @@ func main() {
 | NormalizeNewlines    | bool     | true       | Normalize multiple consecutive newlines to a maximum of 2             |
 | Strip                | []string | nil        | List of tags to strip (if nil, strip none)                            |
 | StripDocument        | string   | LSTRIP     | How to strip document-level whitespace (LSTRIP, RSTRIP, STRIP, or "") |
+| StripLinkTitles      | bool     | true       | Strip all title attributes from links                                 |
 | StrongEmSymbol       | string   | ASTERISK   | Symbol for strong and emphasis (ASTERISK or UNDERSCORE)               |
 | SubSymbol            | string   | ""         | Symbol for subscript                                                  |
 | SupSymbol            | string   | ""         | Symbol for superscript                                                |

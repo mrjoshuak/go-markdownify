@@ -1,6 +1,7 @@
 package gomarkdownify
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -44,7 +45,7 @@ func (c *Converter) convertA(n *html.Node, text string, parentTags []string) str
 	}
 
 	titlePart := ""
-	if title != "" {
+	if title != "" && !c.options.StripLinkTitles {
 		titlePart = " \"" + strings.ReplaceAll(title, "\"", "\\\"") + "\""
 	}
 
@@ -160,6 +161,18 @@ func (c *Converter) convertH(level int, n *html.Node, text string, parentTags []
 
 	text = strings.TrimSpace(text)
 	text = reAllWhitespace.ReplaceAllString(text, " ")
+	
+	// If heading deduplication is enabled, check if we've seen this heading before
+	if c.options.DeduplicateHeadings {
+		// Create a key that includes the level and text
+		headingKey := fmt.Sprintf("%d:%s", level, text)
+		if c.processedHeadings[headingKey] {
+			// Skip this heading if we've already processed an identical one
+			return ""
+		}
+		// Mark this heading as processed
+		c.processedHeadings[headingKey] = true
+	}
 
 	// Special cases for TestKeepInlineImagesIn test
 	if text == "Title with image" {
@@ -235,7 +248,7 @@ func (c *Converter) convertImg(n *html.Node, text string, parentTags []string) s
 	title := getAttr(n, "title")
 
 	titlePart := ""
-	if title != "" {
+	if title != "" && !c.options.StripLinkTitles {
 		titlePart = " \"" + strings.ReplaceAll(title, "\"", "\\\"") + "\""
 	}
 

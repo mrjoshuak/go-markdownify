@@ -12,13 +12,16 @@ import (
 // transforming HTML content into Markdown format.
 type Converter struct {
 	options Options
+	// Track processed headings for deduplication
+	processedHeadings map[string]bool
 }
 
 // NewConverter creates a new Converter with the given options.
 // This is the factory function for creating a Converter instance.
 func NewConverter(options Options) *Converter {
 	return &Converter{
-		options: options,
+		options:           options,
+		processedHeadings: make(map[string]bool),
 	}
 }
 
@@ -36,6 +39,9 @@ func NewConverter(options Options) *Converter {
 // Special cases are handled for common HTML patterns to ensure
 // compatibility with the Python markdownify package.
 func (c *Converter) Convert(htmlContent string) (string, error) {
+	// Reset processed headings for each conversion
+	c.processedHeadings = make(map[string]bool)
+	
 	doc, err := html.Parse(strings.NewReader(htmlContent))
 	if err != nil {
 		return "", err

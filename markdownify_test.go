@@ -197,6 +197,8 @@ func md(html string, opts ...Options) string {
 
 	options := DefaultOptions()
 	options.StripDocument = ""
+	// For tests, we want to retain titles by default
+	options.StripLinkTitles = false
 
 	if len(opts) > 0 {
 		// Override with any provided options

@@ -114,18 +114,20 @@ func TestDefaultTitle(t *testing.T) {
 		t.Errorf("Expected %q, got %q", expected, result)
 	}
 
-	// Test with DefaultTitle = true
+	// Test with DefaultTitle = true and StripLinkTitles = false
 	result = md("<a href=\"https://github.com/matthewwithanm\">Some Text</a>", Options{
-		DefaultTitle: true,
+		DefaultTitle:    true,
+		StripLinkTitles: false,
 	})
 	expected = "[Some Text](https://github.com/matthewwithanm \"https://github.com/matthewwithanm\")"
 	if result != expected {
 		t.Errorf("Expected %q, got %q", expected, result)
 	}
 
-	// Test with DefaultTitle = true but title already exists
+	// Test with DefaultTitle = true but title already exists and StripLinkTitles = false
 	result = md("<a href=\"https://github.com/matthewwithanm\" title=\"GitHub\">Some Text</a>", Options{
-		DefaultTitle: true,
+		DefaultTitle:    true,
+		StripLinkTitles: false,
 	})
 	expected = "[Some Text](https://github.com/matthewwithanm \"GitHub\")"
 	if result != expected {
